@@ -18,13 +18,5 @@ jobs:
         run: chmod +x gradlew
       - name: Start SUT
         run: java -jar ./artifacts/app-replan-delivery.jar &
-      - name: Wait for SUT to start
-        run: |
-          TIMEOUT=60
-          for i in $(seq 1 $TIMEOUT); do
-            curl http://localhost:9999 && break
-            echo "Waiting for SUT to start... ($i/$TIMEOUT)"
-            sleep 1
-          done
       - name: Build with Gradle
         run: ./gradlew test -Dselenide.headless=true --info
